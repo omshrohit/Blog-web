@@ -1,0 +1,18 @@
+
+{% extends "base.html" %}
+{% block content %}
+{% if user.is_authenticated %}
+  
+        <h3>Delete Your Posts...</h3>
+        <form method="POST">
+            {% csrf_token %}
+            <h4>Are you sure ?</h4>
+            <button class="btn btn-secondary">Delete</button>
+        </form>
+        <br>
+        <a href="{% url 'posts' %}" class="btn btn-secondary">Back</a>
+{%else%}
+You'r not allowed here!(and you know it...)
+{%endif%}    
+
+{% endblock %}

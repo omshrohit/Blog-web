@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+
+{% block title %}
+    {{post.title_tag}}
+{% endblock %}
+
+
+{% block content %}
+{% if user.is_authenticated %}
+        login user   : {{user.id}},<br/>
+        post author  : {{post.author.id}}
+                <h3>{{post.title}}</h3>
+                by : {{post.author}} -
+                {% if user.is_authenticated %}
+                        {% if user.id == post.author.id %}
+                        <small>
+                            <a href="{% url 'edit-post' post.pk %}">(edit)</a>
+                            <a href="{% url 'delete-post' post.pk %}">(delete)</a>
+                        </small>
+                        {% endif %}
+                {% endif %}
+                <hr>
+                {{post.body | safe}}
+            <hr>
+        <a href="{% url 'posts' %}" class="btn btn-secondary">Back</a>
+        <br/>
+        <hr/>
+        <br/>
+        <form action="{%url 'like' post.pk %}" method="post">
+                {% csrf_token %}
+                <button type="submit" name="post_id" value="{{post.id}}"
+                class="btn btn-primary btn-sm">Like</button> - {{total_likes}} likes
+        </form>
+        <br/>
+{%else%}
+        You'r not allowed here!(and you know it...)
+{%endif%}
+{% endblock %}

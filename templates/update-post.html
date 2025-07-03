@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block content %}
+{% if user.is_authenticated %}
+        <h3>Update Blog Post...</h3>
+        <form method="post">
+            {% csrf_token %}
+            {{form.media}}
+            {{form.as_p}}
+            <button class="btn btn-secondary">Update Post</button>
+        </form>
+{%else%}
+You'r not allowed here!(and you know it...)
+{%endif%}
+{% endblock  %}
